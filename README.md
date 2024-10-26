@@ -1,38 +1,42 @@
-Role Name
+waal70.vscode
 =========
 
-A brief description of the role goes here.
-
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role installs the vscode repository, takes care of the signing key.
+It then installs the code package
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+It uses the following variables and defaults:
+The url that hosts the apt/repository signing key:
+vscode_apt_key_url: [https://packages.microsoft.com/keys/microsoft.asc]
+The url that is the base for the packages:
+vscode_repo_url: [https://packages.microsoft.com/repos/code]
+Which suite to take (suggest to use stable):
+vscode_apt_suite: stable
+Which components to take (default: main):
+vscode_apt_components: main
+Variable that determines package architecture based on ansible_architecture:
+vscode_apt_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'amd64' }}"
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+This role only makes sense in a desktop environment. I suggest you use waal70.debian_desktop for that.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - waal70.vscode
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+[https://github.com/waal70]
